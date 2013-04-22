@@ -1,0 +1,50 @@
+html
+  head
+    title Talkmob / Welcome
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
+    script(type='text/javascript', src='https://www.google.com/jsapi')
+    //script(type='text/javascript')
+    //  google.load("jquery", "1.4.4");
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js', type='text/javascript')
+    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js', type='text/javascript')
+    script(type='text/javascript', src='/javascripts/taglist.js')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/main.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
+  body
+       #main
+         p Talk Mob
+         .last
+           form#form(action='', method='POST', accept-charset='utf-8')
+             input(type='hidden', name='settagid', value='')
+             ul#tag-list-area
+               each item in list
+                 tagid = item.tagid
+                 li.tag-list-box
+                   section.tag-status-box
+                     a(href='/tags/JavaScript')
+                       span.tag-name=item.tagname
+                     .follow-button-box
+                       if item.id == null
+                         p(id=tagid).tag-button(href='#') 登録
+                       else
+                         p(id=tagid).tag-button-selected(href='#') 登録済み
+                       b 7299
+                       | フォロワー
+
+
+         .left
+           .user-info-mini
+             img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name}&size=bigger')
+             h3 #{user_name}
+           .category-navigation
+             nav#category-navigation
+               ul
+                 li
+                   a(href='/taglist') 興味タグリスト
+                 li
+                   a(href='/createid') ユーザ設定
+                 li
+                   a(href='/mainboad') メインボード
+                 li
+                   a(href='/logout') ログアウト

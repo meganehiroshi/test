@@ -1,0 +1,81 @@
+html
+  head
+    title Talkmob / Welcome
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/main.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
+
+  body
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(src='js/bootstrap.min.js')
+    #main
+      .user-info
+            form#form(action='', method='POST', accept-charset='utf-8').well
+              fieldset
+                .control-group
+                  label.control-label(for='name') 名前
+                  .controls
+                    input#name.input-xlarge(type='text',name='name')
+                    p.help-block
+                .control-group
+                  label.control-label(for='pass') パスワード
+                  .controls
+                    input#pass.input-xlarge(type='text',name='pass')
+                    p.help-block
+                .control-group
+                  label.control-label(for='mail') メールアドレス
+                  .controls
+                    input#mail.input-xlarge(type='text',name='mail')
+                    p.help-block
+                .control-group
+                  label.control-label 性別
+                  .controls
+                    label.radio
+                      input#optionsRadios1(type='radio', name='gender', value='1', checked='checked')
+                      | 男性
+                    label.radio
+                      input#optionsRadios2(type='radio', name='gender', value='2')
+                      | 女性
+               .control-group
+                  label.control-label 生まれた年
+                  .controls
+                    label.checkbox
+                      select.span2
+                        option 1980
+                        option 1981
+                        option 1982
+                        option 1983
+                        option 1984
+                        option 1985
+                        option 1986
+                        option 1987
+                        option 1988
+                        option 1989
+                        option(selected='selected') 1990
+                        option 1991
+                        option 1992
+                        option 1993
+                        option 1994
+                        option 1995
+                        option 1996
+                        option 1997
+                        option 1998
+                        option 1999
+                        option 2000
+               .control-group
+                  label.control-label 職種
+                  .controls
+                    each item in occupation
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | item.notation
+
+
+                #ConfirmationDialog.ModalContainer.alertBox
+
+                    .closeBtn.closeButton  
+                    .footer
+                      input.btn.btn-success.btn-large(type='submit', value='Submit Button')
+                      label.control-label(for='mail') #{db_result}
+                  .overlay

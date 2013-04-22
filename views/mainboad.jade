@@ -1,0 +1,31 @@
+html
+  head
+    title Talkmob / Welcome
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/main.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
+  body
+    #main
+      p Talk Mob
+      .left
+        .user-info-mini
+         img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name}&size=bigger')
+         h3 #{user_name}
+        .category-navigation
+          nav#category-navigation
+            ul
+              li
+                a(href='taglist') 興味タグリスト
+              li
+                a(href='createid') ユーザ設定
+              li
+                a(href='mainboad') メインボード
+              li
+                a(href='logout') ログアウト
+      .last
+        each item in list
+          .dashboard-notice.style(align='left')
+            h4
+              a.BigButton.twitter(href='talkboad')
+                | #{item.title}
