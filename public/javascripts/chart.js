@@ -11,7 +11,7 @@
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+          title: '閲覧ユーザ層'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -20,15 +20,15 @@
       google.setOnLoadCallback(drawChart2);
       function drawChart2() {
         var data2 = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
+          ['Time', 'Sales', 'Expenses'],
+          ['12:00',  100,      40],
+          ['15:00',  117,      46],
+          ['18:00',  66,       112],
+          ['21:00',  103,      54]
         ]);
 
         var options2 = {
-          title: 'Company Performance'
+          title: 'アクセス数'
         };
 
         var chart2 = new google.visualization.LineChart(document.getElementById('chart_div2'));

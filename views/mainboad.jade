@@ -6,7 +6,24 @@ html
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
   body
-    #main
+   .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+         span.icon-bar
+         span.icon-bar
+         span.icon-bar
+        a.brand(href='./mainboad') Talk Mob
+        .nav-collapse.collapse
+          ul.nav
+            li
+              a(href='./mainboad') メインボード
+            li
+              a(href='./createid') ユーザ設定
+            li
+              a(href='./taglist') 興味タグ
+
+   #main
       p Talk Mob
       .left
         .user-info-mini
@@ -23,9 +40,23 @@ html
                 a(href='mainboad') メインボード
               li
                 a(href='logout') ログアウト
-      .last
+      .last(style='height:20%;')
+             h3
+              p.text-left 招待済みのトークルーム
+             blockquote(style='background:#EFE ;padding :20px')
+              p.text-left.text-success
+                a(href='talkboad')
+                 strong テーマ：「TPPってどうよ？」
+              small.text-left 開始日：2013/04/01 タグ：[TPP] 　
+
+      .last(style='height:70%;')
+        h3
+         p.text-left 開催中のトークルーム
         each item in list
-          .dashboard-notice.style(align='left')
-            h4
-              a.BigButton.twitter(href='talkboad')
-                | #{item.title}
+
+             blockquote(style='background:#FAFAFA ;padding :15px')
+              p.text-left.text-success
+                a(href='talkboad')
+                 strong テーマ：#{item.title}
+              small.text-left 開始日：2013/04/01 タグ：[#{item.tagname}] 　
+

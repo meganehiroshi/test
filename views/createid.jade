@@ -9,12 +9,29 @@ html
   body
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
     script(src='js/bootstrap.min.js')
-    #main
-      .user-info
-            form#form(action='', method='POST', accept-charset='utf-8').well
-              fieldset
+   .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+         span.icon-bar
+         span.icon-bar
+         span.icon-bar
+        a.brand(href='./mainboad') Talk Mob
+        .nav-collapse.collapse
+          ul.nav
+            li
+              a(href='./mainboad') メインボード
+            li
+              a(href='./createid') ユーザ設定
+            li
+              a(href='./taglist') 興味タグ
+   #main
+    .row
+      .dummy.span12
+            form.form-horizontal.span8.offset2(action='', method='POST', accept-charset='utf-8',style='width:auto;align:center;').well
+               fieldset
                 .control-group
-                  label.control-label(for='name') 名前
+                  label.control-label(for='name') アカウント名
                   .controls
                     input#name.input-xlarge(type='text',name='name')
                     p.help-block
@@ -37,7 +54,7 @@ html
                     label.radio
                       input#optionsRadios2(type='radio', name='gender', value='2')
                       | 女性
-               .control-group
+                .control-group
                   label.control-label 生まれた年
                   .controls
                     label.checkbox
@@ -63,19 +80,40 @@ html
                         option 1998
                         option 1999
                         option 2000
-               .control-group
+                .control-group
                   label.control-label 職種
                   .controls
-                    each item in occupation
+                      //each item in occupation
                       label.checkbox
                         input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | item.notation
+                        | 営業・販売・サービス系
+                        //| item.notation
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | 事務・オフィス系
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | クリエイティブ系
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | IT・技術系
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | 医療・介護系
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | 美容・教育系
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | 工場・物流・土木建築系
+                      label.checkbox
+                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
+                        | 飲食・コンビニ・施設系
 
 
-                #ConfirmationDialog.ModalContainer.alertBox
 
-                    .closeBtn.closeButton  
-                    .footer
-                      input.btn.btn-success.btn-large(type='submit', value='Submit Button')
-                      label.control-label(for='mail') #{db_result}
-                  .overlay
+                //.closeBtn.closeButton  
+                .dummy
+                      input.btn.btn-success.btn-large(type='submit', value='ユーザー登録')
+                      p.text-success #{db_result}
+                .overlay

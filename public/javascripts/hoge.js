@@ -1,3 +1,10 @@
+function shoki(){
+	$('#screen').append(
+
+	)
+
+}
+
 /* Canvasを追加し、追加されたCanvasを返す。 */
 function addCanvas(width, height) {
     var screen = document.getElementById('screen');
@@ -11,8 +18,8 @@ function addCanvas(width, height) {
             .attr('height', height)
 			.css({
 			        position: 'absolute',
-			        top: '100px',
-			        left: '150px'
+			        top: '180px',
+			        left: '340px'
 			        //marginLeft: '-300px'
 			    })
     );
@@ -31,10 +38,10 @@ function initContext(canvas, context, data) {
     	//window.alert(text);
 //    var text = document.forms.fm.text.value;
     if (data.text) {
-        context.font = "16px 'MS Pゴシック'";
+        context.font = "13px 'MS Pゴシック'";
     	//context.font = "16px";
-        context.fillStyle = "white";
-        var x = 2;
+        context.fillStyle = "black";
+        var x = 7;
         var y = canvas.height/2 + 8;
         context.fillText(data.text, x, y, canvas.width);
     }
@@ -47,7 +54,7 @@ function initContext(canvas, context, data) {
 		//window.alert('2');
 		    // Canvasを取得
 		    var width = 120;
-		    var height = 50;
+		    var height = 30;
 		    var canvas = addCanvas(width, height);
 
 		    canvas.addEventListener("mouseup", mouseUpHandler, false);
@@ -116,3 +123,36 @@ function move(data) {
 	    });
 
 }
+
+//タブ切換え
+$(function() {
+
+	$('#myTab a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	})
+
+//canvas.drawDashLine(50, 50, 300, 200);
+	$('#openModal').click(function (e) {
+
+		//window.alert('asdf');
+		//$('body').addClass('modal-open');
+		//$("div#main").fadeOut(500);
+		//$("div#main").stop().fadeTo(500,4);
+		$('#myModal').modal({
+           // show:true
+			backdrop: true
+		});
+		//$('#myModal').removeClass('hide');
+		//$('#myModal').removeClass('fade');
+		//$('#myModal').addClass('show');
+/*
+		$('#myModal').modal({
+           // backdrop: true
+		});
+*/
+	})
+
+})
+
+

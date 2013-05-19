@@ -1,7 +1,8 @@
 	//SQL文を書く
 	var SQL_taglist_sel = 'select tag.tagid,tagname,id from tag left join user_tag using(tagid) where id is null or id = ?;';
 	var SQL_taglist_upd = 'insert into user_tag (id,tagid) values (?,?);';
-	var SQL_meetinglist_sel = 'select * from meeting;';
+//	var SQL_meetinglist_sel = 'select * from meeting;';
+	var SQL_meetinglist_sel = 'select tag.tagid,tagname,title,start from meeting join tag using(tagid) ;';
 	var SQL_occupation_sel = 'select * from occupation;';
 
 module.exports.select_occupation = select_occupation;

@@ -16,20 +16,44 @@ html
     script(type='text/javascript', src='/javascripts/chart.js')
     script(type='text/javascript', src='/javascripts/bootstrap.min.js')
     script(type='text/javascript', src='/javascripts/bootstrap-tab.js')
+    script(type='text/javascript', src='/javascripts/bootstrap-modal.js')
     link(rel='stylesheet', type='text/css', href='/stylesheets/main.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/font-awesome.css')
-  body
-    #main
+  body.dummy(onLoad='hoge()')
+   .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+         span.icon-bar
+         span.icon-bar
+         span.icon-bar
+        a.brand(href='./mainboad') Talk Mob
+        .nav-collapse.collapse
+          ul.nav
+            li
+              a(href='./mainboad') メインボード
+            li
+              a(href='./createid') ユーザ設定
+            li
+              a(href='./taglist') 興味タグ
+
+   #main
        .postitboad
-         //canvas#canvas_boad(width='490', height='450')
-         #screen(style='background: #f9f9f9; height: 430px; width: 540px;')
+         //canvas#canvas_boad(width='490', height='400')
+         blockquote(style='background:#EFE ;padding :15px;')
+          p.text-left.text-success
+           strong テーマ：「TPPってどうなの？」
+          small.text-left 開始日：2013/04/01 タグ：[TPP]
+         #screen(style='background: #f9f9f9; height: 300px; width: 540px;')
          button.btn(type='submit', id='addRect') postit
-         textarea(id='posttext')
+         textarea(id='posttext' ,  rows='1', cols='40')
+
+
          .accessory
           .tabbable.tabs-right
-           ul.nav.nav-tabs
+           ul#myTab.nav.nav-tabs
             li.active
              a(href='#1data', data-toggle='tab')
                i.icon-bar-chart.icon-3x
@@ -44,15 +68,152 @@ html
               i.icon-group.icon-3x
            .tab-content
             #1data.tab-pane.active
-             #chart_div(style='width: 190px; height: 200px;float:left;')
-             #chart_div2(style='width: 190px; height: 200px;float:left;')
+             #chart_div(style='width: 190px; height: 160px;float:left;')
+             #chart_div2(style='width: 190px; height: 160px;float:left;')
+             .dummy
+              img.img-rounded(src='/images/audience.png')
             #2file.tab-pane
-             p Howdy, I'm in Section 2.
+             table.table
+               thead
+                 tr
+                   th #
+                   th 記事
+               tbody
+                 tr
+                   td
+                    img#esc-thumbnail-52778337738185.th.late-tbn(imgsrc='https://news.google.com/news/tbn/58fOWkxW9IMJ/6.jpg', alt='', border='0', width='72', height='72', style='margin:0', src='https://news.google.com/news/tbn/58fOWkxW9IMJ/6.jpg')
+                   td クローズアップ２０１３:ＴＰＰ日米協議合意 参加ありき、争点棚上げ
+                 tr
+                   td
+                    img#esc-thumbnail-3872128626133068251.th.late-tbn(imgsrc='https://news.google.com/news/tbn/S_nUw3EMlHcJ/6.jpg', alt='', border='0', width='72', height='72', style='margin:0', src='https://news.google.com/news/tbn/S_nUw3EMlHcJ/6.jpg')
+                   td 出版権提案、TPP交渉参加、絶版作品のダウンロード
+                 tr
+                   td
+                    img#esc-thumbnail-3872128626133068251.th.late-tbn(imgsrc='https://news.google.com/news/tbn/S_nUw3EMlHcJ/6.jpg', alt='', border='0', width='72', height='72', style='margin:0', src='/images/tpp_site.png')
+                   td 考えてみよう！TPPのこと 日本の食と暮らし・いのちを守るネットワーク
+
+
             #3.tab-pane
+             p.text-left
+              h4 memo
+             textarea(  rows='8', cols='80' ,style='width:350px;')
+             .dummy
+              button.btn.btn-success(type='button') 保存
             #4.tab-pane
+             table.table
+               thead
+                 tr
+                   th #
+                   th アンケート
+                   th 日付
+                   th 結果
+               tbody
+                 tr
+                   td 1
+                   td 自分の仕事に良い影響があると思う？
+                   td 2013/4/1
+                   td Yes:38% No:62%
+                 tr
+                   td 2
+                   td ISD条項ってしってる？
+                   td 2013/4/1
+                   td Yes:55% No:45%
+                 tr
+                   td 3
+                   td Larry
+                   td the Bird
+                   td @twitter
+
+             a.btn.btn-success#openModal(data-target='#myModal', role='button', data-toggle='modal') アンケート作成
+
 
        .chatboad
-         dl#list
+         dl#memberlisttd(style='border:solid 1px;margin:1px;padding:2px;background-color:#BBB;')
+          img.img-rounded(src='/images/gachapin.jpeg')
+          img.img-rounded(src='/images/shiro_normal.jpg')
+          img.img-rounded(src='/images/tsuda.png')
+          img.img-rounded(src='/images/ishiba.gif')
+          img.img-rounded(src='/images/anpan2.jpeg')
+          img.img-rounded(src='/images/pamyu.jpeg')
+         dl#list.scrollable
+          table
+            tbody
+              tr
+                td
+                  img(src='/images/anpan2.jpeg')
+                td
+                  .balloon
+                    | 海外の安いパン粉が手に入るようになるかな
+                    li
+                     a(href='#')
+                      i.icon-thumbs-up
+                     a(href='#',style='color:orange;')
+                      i.icon-warning-sign
+          table
+            tbody
+              tr
+                td
+                  img(src='/images/gachapin.jpeg')
+                td
+                  .balloon
+                    | 環境問題も重要だよねー
+                    li
+                     a(href='#')
+                      i.icon-thumbs-up
+                     a(href='#',style='color:orange;')
+                      i.icon-warning-sign
+          table
+            tbody
+              tr
+                td
+                  img(src='/images/ishiba.gif')
+                td
+                  .balloon
+                    | 石破です。
+                    li
+                     a(href='#')
+                      i.icon-thumbs-up
+                     a(href='#',style='color:orange;')
+                      i.icon-warning-sign
+          table
+            tbody
+              tr
+                td
+                  img(src='/images/pamyu.jpeg')
+                td
+                  .balloon
+                    | gu
+                    li
+                     a(href='#')
+                      i.icon-thumbs-up
+                     a(href='#',style='color:orange;')
+                      i.icon-warning-sign
+          table
+            tbody
+              tr
+                td
+                  img(src='/images/pamyu.jpeg')
+                td
+                  .balloon
+                    | やっぱり、輸入品が安くなっていいよね。
+                    li
+                     a(href='#')
+                      i.icon-thumbs-up
+                     a(href='#',style='color:orange;')
+                      i.icon-warning-sign
+          table
+            tbody
+              tr
+                td
+                  img(src='/images/ishiba.gif')
+                td
+                  .balloon
+                    | 国民を守るために、そのために生まれてきた。
+                    li
+                     a(href='#')
+                      i.icon-thumbs-up
+                     a(href='#',style='color:orange;')
+                      i.icon-warning-sign
          dl#typing
 
          form(id='form', action='')
@@ -65,5 +226,15 @@ html
                  textarea#message(name='message', rows='2', cols='40')
                  input.btn.btn-success.btn(type='submit', value='送信')
 
-
+  #myModal.modal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='display:none;')
+               .modal-header(style='background:#EFE')
+                 button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                 h3#myModalLabel
+                  i.icon-group.icon-large(style='font-color:red') オーディエンス
+               .modal-body
+                 p オーディエンスに聞きたい事を記入してください
+                 textarea(rows='2' , placeholder='記入してください', style='width:300px;')
+               .modal-footer
+                 button.btn(data-dismiss='modal', aria-hidden='true') キャンセル
+                 button.btn.btn-primary 送信
 

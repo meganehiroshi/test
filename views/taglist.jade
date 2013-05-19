@@ -12,7 +12,24 @@ html
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
   body
-       #main
+   .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+         span.icon-bar
+         span.icon-bar
+         span.icon-bar
+        a.brand(href='./mainboad') Talk Mob
+        .nav-collapse.collapse
+          ul.nav
+            li
+              a(href='./mainboad') メインボード
+            li
+              a(href='./createid') ユーザ設定
+            li
+              a(href='./taglist') 興味タグ
+
+   #main
          p Talk Mob
          .last
            form#form(action='', method='POST', accept-charset='utf-8')
@@ -26,9 +43,9 @@ html
                        span.tag-name=item.tagname
                      .follow-button-box
                        if item.id == null
-                         p(id=tagid).tag-button(href='#') 登録
+                         p(id=tagid).btn.btn-large.btn-block.btn-success(href='#') 登録
                        else
-                         p(id=tagid).tag-button-selected(href='#') 登録済み
+                         p(id=tagid).btn.btn-large.btn-block.btn-warning.disabled(href='#') 登録済み
                        b 7299
                        | フォロワー
 

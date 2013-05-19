@@ -1,6 +1,6 @@
 $(function() {
 
-	$(".tag-button").mouseup(function() {
+	$(".btn").mouseup(function() {
 		tagid = $(this).attr("id");
 
 		$('input[type=hidden]').val(tagid);

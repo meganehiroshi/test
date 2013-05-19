@@ -1,7 +1,8 @@
 @CHARSET "UTF-8";
 	<style type="text/css">
-		body,h1,h2,h3,div,p,ul,li,img,table,td,form,input { margin:0; padding:0}
+		body,h1,h2,h3,div,p,ul,li,img,table,td,form,input { margin:0; padding:0 ; background:url('http://www.scientifictopcs.pureheart-counseling.com/wp-content/uploads/2010/12/mil41046-s.jpg');}
 		img { border:0; }
+
 
 		li { list-style:none outside; }
 		body { align:center; line-height:115%; background:#B6D2DE url() no-repeat fixed 0 0 ; color:#663B12;  font-size:.95em; font-family:sans-serif;  margin:0 auto 0 auto;}
@@ -10,9 +11,10 @@
 		#main {
 			 align:center;
 			margin:5 auto;
+			margin-top:45;
 			width:900px;
 			height:100%;
-			padding:20px;
+			padding:10px;
 			background-color:#C6E2EE;
 			//border-right:1px solid #B6D2DE;
 			vertical-align:top;
@@ -75,7 +77,7 @@
 		div.box1 { padding:8px; margin-bottom:10px; }
 		div.box1 > p { margin-bottom:1em; line-height:130%; }
 
-		div.user-info {margin:0 auto 0 auto; width:503px; line-height:125%; overflow:hidden; word-wrap:break-word; padding:5px 10px;clear:all;font-size:.85em;background-color:#f5f5f5; border:1px solid #ccc;-webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; }
+		div.user-info {margin:0 auto 0 auto; height:90%;width:503px; line-height:125%; overflow:hidden; word-wrap:break-word; padding:5px 10px;clear:all;font-size:.85em;background-color:#f5f5f5; border:1px solid #ccc;-webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; }
 		div.user-info > p { margin-bottom:2px;  }
 		div.user-info-mini {float:left;margin:10 auto 10 auto; width:80%; height:150px;line-height:125%; overflow:hidden; word-wrap:break-word; padding:5px 5px;clear:all;font-size:.85em;background-color:#f5f5f5; border:1px solid #ccc;-webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; }
 
@@ -222,7 +224,7 @@
 	div.last {
 		float: right;
 		width: 630;
-		height:95%;
+		height:90%;
 		text-align:center;
 		background-color:#ffffff;
 		margin:0;
@@ -232,7 +234,7 @@
 	div.postitboad {
 		float: left;
 		width: 540;
-		height:100%;
+		height:95%;
 		text-align:center;
 		background-color:#ffffff;
 		margin:0;
@@ -252,7 +254,7 @@
 	div.left{
 		float: left;
 		width: 210px;
-		height:95%;
+		height:90%;
 		text-align:center;
 		background-color:#ffffff;
 		border:2px solid #eeeeee;
@@ -271,7 +273,7 @@
 	div.chatboad {
 		float: left;
 		width: 310px;
-		height:100%;
+		height:95%;
 		text-align:center;
 		background-color:#ffffff;
 		margin:0;
