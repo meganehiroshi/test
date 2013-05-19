@@ -1,6 +1,8 @@
 
 
 //------------------ aouth --------------------//
+
+var domain = (process.env.NODE_ENV === 'local') ?  'localhost:3000' : 'nodetesttalkmob.elasticbeanstalk.com' ;
 var OAuth = require('oauth').OAuth;
 var oa = new OAuth(
   "https://api.twitter.com/oauth/request_token",
@@ -8,7 +10,8 @@ var oa = new OAuth(
   "khq3qZqPdT7UczkRPR3Alw", //twitter appで発行されたConsumer keyを入力。
   "1SgZKbNyOngUcJfWkki11J07fbR3UMN2Drkx8tdc", //twitter appで発行されたConsumer secretを入力。
   "1.0",
-  "http://localhost:3000/callback",
+  "http://" + domain + "/callback",
+  //"{SITE URL}/callback",
   "HMAC-SHA1"
 );
 
