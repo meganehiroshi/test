@@ -5,17 +5,29 @@
 	var SQL_meetinglist_sel = 'select tag.tagid,tagname,title,start from meeting join tag using(tagid) ;';
 	var SQL_occupation_sel = 'select * from occupation;';
 
+	//local設定
+//	var CONNECT_INFO ={
+//	             	  host     : 'localhost', //接続先ホスト
+//	             	  user     : 'root',      //ユーザー名
+//	             	  password : 'root',  //パスワード
+//	             	  database : 'talkmob'    //DB名
+//					}
+
+	//AWS設定
+	var CONNECT_INFO ={
+	                   host     : process.env.RDS_HOSTNAME,
+	                   user     : process.env.RDS_USERNAME,
+	                   password : process.env.RDS_PASSWORD,
+	                   port     : process.env.RDS_PORT,
+	             	  database : 'talkmob'    //DB名
+					}
+
 module.exports.select_occupation = select_occupation;
 	function select_occupation(req, res){
 	  console.log('oc start: ' );
 	var mysql = require('mysql');
 
-	var connection = mysql.createConnection({
-	  host     : 'localhost', //接続先ホスト
-	  user     : 'root',      //ユーザー名
-	  password : 'root',  //パスワード
-	  database : 'talkmob'    //DB名
-	});
+	var connection = mysql.createConnection(CONNECT_INFO);
 
 	//接続します
 	connection.connect();
@@ -62,12 +74,7 @@ exports.select_meetinglist = select_meetinglist;
 
 	var mysql = require('mysql');
 
-	var connection = mysql.createConnection({
-	  host     : 'localhost', //接続先ホスト
-	  user     : 'root',      //ユーザー名
-	  password : 'root',  //パスワード
-	  database : 'talkmob'    //DB名
-	});
+	var connection = mysql.createConnection(CONNECT_INFO);
 
 	//SQL文を書く
 	//var sql = 'select tagid,tagname from tag;';
@@ -113,13 +120,7 @@ exports.select_meetinglist = select_meetinglist;
   function select_taglist(req, res){
 
 	var mysql = require('mysql');
-
-	var connection = mysql.createConnection({
-	  host     : 'localhost', //接続先ホスト
-	  user     : 'root',      //ユーザー名
-	  password : 'root',  //パスワード
-	  database : 'talkmob'    //DB名
-	});
+	var connection = mysql.createConnection(CONNECT_INFO);
 
 	//SQL文を書く
 	//var sql = 'select tagid,tagname from tag;';
@@ -164,12 +165,7 @@ exports.update_tag = update_tag;
 
 		var mysql = require('mysql');
 
-		var connection = mysql.createConnection({
-		  host     : 'localhost', //接続先ホスト
-		  user     : 'root',      //ユーザー名
-		  password : 'root',  //パスワード
-		  database : 'talkmob'    //DB名
-		});
+		var connection = mysql.createConnection(CONNECT_INFO);
 
 		//SQL文を書く
 		//var sql = 'insert into user_tag (id,tagid) values (?,?);';
@@ -215,12 +211,7 @@ exports.update_tag = update_tag;
 
 	var mysql = require('mysql');
 
-	var connection = mysql.createConnection({
-	  host     : 'localhost', //接続先ホスト
-	  user     : 'root',      //ユーザー名
-	  password : 'root',  //パスワード
-	  database : 'talkmob'    //DB名
-	});
+	var connection = mysql.createConnection(CONNECT_INFO);
 
 	//SQL文を書く
 	var sql = 'insert into user (name,pass,mail,gender) values (?,?,?,?);';

@@ -1,3 +1,7 @@
+create database talkmob CHARACTER SET utf8;
+
+use talkmob;
+
 create table user(
 	id MEDIUMINT NOT NULL AUTO_INCREMENT,
 	name char(30) not null,
