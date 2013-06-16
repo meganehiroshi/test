@@ -1,0 +1,19 @@
+script(type='text/javascript')
+
+.navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+
+        a.brand(href='http://#{domain}') Talk Mob
+        if user_name != null
+          .nav-collapse.collapse
+                ul.nav
+                  li
+                    a(href='http://#{domain}/mainboad') メインボード
+                  li
+                    a(href='http://#{domain}/createid') ユーザ設定
+                  li
+                    a(href='http://#{domain}/taglist') 興味タグ
+                  li
+                    a(href="http://#{domain}/logout") ログアウト

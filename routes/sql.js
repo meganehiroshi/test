@@ -1,8 +1,9 @@
 	//SQL文を書く
-	var SQL_taglist_sel = 'select tag.tagid,tagname,id from tag left join user_tag using(tagid) where id is null or id = ?;';
+	var SQL_taglist_sel = 'select tag.tagid,tagname,user_tag.id from tag left outer join (select id,user_tag.tagid from user_tag where id =?)user_tag using(tagid) ;';
 	var SQL_taglist_upd = 'insert into user_tag (id,tagid) values (?,?);';
-//	var SQL_meetinglist_sel = 'select * from meeting;';
-	var SQL_meetinglist_sel = 'select tag.tagid,tagname,title,start from meeting join tag using(tagid) ;';
+//	var SQL_themelist_sel = 'select * from theme;';
+	var SQL_themelist_sel        = 'select talkroom.roomid,tag.tagid,tagname,title,DATE_FORMAT(talkroom.start,"%Y/%m/%d") as start,talkroom.end from theme , tag , talkroom where theme.tagid = tag.tagid and theme.themeid = talkroom.themeid order by talkroom.start desc;';
+	var SQL_invitedTheme_sel     = 'select talkroom.roomid,tag.tagid,tagname,title,DATE_FORMAT(talkroom.start,"%Y/%m/%d") as start,talkroom.end from theme , tag , talkroom , talkroom_member where theme.tagid = tag.tagid and theme.themeid = talkroom.themeid and talkroom.roomid=talkroom_member.roomid and talkroom_member.id=? order by talkroom.start desc;';
 	var SQL_occupation_sel = 'select * from occupation;';
 
 	//local設定
@@ -23,7 +24,7 @@
 					}
 
 module.exports.select_occupation = select_occupation;
-	function select_occupation(req, res){
+	function select_occupation(req, res ,user){
 	  console.log('oc start: ' );
 	var mysql = require('mysql');
 
@@ -32,7 +33,7 @@ module.exports.select_occupation = select_occupation;
 	//接続します
 	connection.connect();
 
-	var params =  [1];
+	var params =  [user.id];
 
 	//プレースホルダー使ってSQL発行
 	var query = connection.query(SQL_occupation_sel);
@@ -42,7 +43,7 @@ module.exports.select_occupation = select_occupation;
 	  //エラー用
 	  .on('error', function(err) {
 	    console.log('err is: ', err );
-	    res.render('meeting',{
+	    res.render('theme',{
 	    	db_result: '失敗しました'
 		});
 	  })
@@ -69,29 +70,61 @@ module.exports.select_occupation = select_occupation;
 
 	};
 
-exports.select_meetinglist = select_meetinglist;
-  function select_meetinglist(req, res){
+exports.select_themelist = select_themelist;
+  function select_themelist(req , res , callback){
 
 	var mysql = require('mysql');
 
 	var connection = mysql.createConnection(CONNECT_INFO);
-
-	//SQL文を書く
-	//var sql = 'select tagid,tagname from tag;';
-	//接続します
 	connection.connect();
 
-	var params =  [1];
-
 	//プレースホルダー使ってSQL発行
-	var query = connection.query(SQL_meetinglist_sel,params);
+	var query = connection.query(SQL_themelist_sel);
 	var results = [];
 	  //あとはイベント発生したらそれぞれよろしくねっ
 	query
 	  //エラー用
 	  .on('error', function(err) {
 	    console.log('err is: ', err );
-	    res.render('meeting',{
+	    callback({
+	    	db_result: '失敗しました'
+		});
+	  })
+
+	  //結果用
+	  .on('result', function(row) {
+	     //console.log('The res is resluts: ', row );
+	    results.push(row);
+	  })
+
+	  //終わったよう～
+	  .on('end', function() {
+	    console.log('end');
+	    //connection.destroy(); //終了
+	    connection.end();
+	    callback(results);
+	  });
+
+	};
+
+exports.select_InvitedTheme = select_InvitedTheme;
+  function select_InvitedTheme(req , res , callback){
+
+	var mysql = require('mysql');
+	console.log('req.user.id: ' + req.user.id );
+	var connection = mysql.createConnection(CONNECT_INFO);
+	connection.connect();
+	var params =  [req.user.id];
+
+	//プレースホルダー使ってSQL発行
+	var query = connection.query(SQL_invitedTheme_sel,params);
+	var results = [];
+	  //あとはイベント発生したらそれぞれよろしくねっ
+	query
+	  //エラー用
+	  .on('error', function(err) {
+	    console.log('err is: ', err );
+	    callback({
 	    	db_result: '失敗しました'
 		});
 	  })
@@ -107,17 +140,16 @@ exports.select_meetinglist = select_meetinglist;
 	    console.log('end');
 	    //connection.destroy(); //終了
 	    connection.end();
-	    res.render('mainboad',{
-	    	list: results,
-	    	user_name: req.session.user});
+	    callback(results);
 	  });
 
 	};
 
 
+
   exports.select_taglist = select_taglist;
 
-  function select_taglist(req, res){
+  function select_taglist(req, res , user){
 
 	var mysql = require('mysql');
 	var connection = mysql.createConnection(CONNECT_INFO);
@@ -127,7 +159,7 @@ exports.select_meetinglist = select_meetinglist;
 	//接続します
 	connection.connect();
 
-	var params =  [1];
+	var params =  [user.id];
 
 	//プレースホルダー使ってSQL発行
 	var query = connection.query(SQL_taglist_sel,params);
@@ -160,8 +192,50 @@ exports.select_meetinglist = select_meetinglist;
 
 	};
 
+	  exports.select_taglist2 = select_taglist2;
+
+  function select_taglist2(req, res , user , callback){
+
+	var mysql = require('mysql');
+	var connection = mysql.createConnection(CONNECT_INFO);
+
+	//接続します
+	connection.connect();
+
+	var params =  [user.id];
+	var results = [];
+
+	//プレースホルダー使ってSQL発行
+	var query = connection.query(SQL_taglist_sel,params);
+
+
+	//あとはイベント発生したらそれぞれよろしくねっ
+	query
+	  //エラー用
+	  .on('error', function(err) {
+	    console.log('err is: ', err );
+	    callback(null);
+	  })
+
+	  //結果用
+	  .on('result', function(row) {
+	    console.log('The res is resluts: ', row );
+	    results.push(row);
+	  })
+
+	  //終わったよう～
+	  .on('end', function() {
+	    console.log('end');
+	    //connection.destroy(); //終了
+	    connection.end();
+	    callback(results);
+	  });
+
+	};
+
+
 exports.update_tag = update_tag;
-	function update_tag(req, res){
+	function update_tag(req, res , user , callback){
 
 		var mysql = require('mysql');
 
@@ -169,7 +243,7 @@ exports.update_tag = update_tag;
 
 		//SQL文を書く
 		//var sql = 'insert into user_tag (id,tagid) values (?,?);';
-		var params =  [1,req.param('settagid')];
+		var params =  [user.id , req.param('settagid')];
 		console.log('name: ', req.param('settagid') );
 		//接続します
 		connection.connect();
@@ -182,14 +256,13 @@ exports.update_tag = update_tag;
 		  //エラー用
 		  .on('error', function(err) {
 		    console.log('set tag err: ', err );
-		    res.render('taglist',{
-		    	db_result: '失敗しました'
-			});
+		    callback(null);
 		  })
 
 		  //結果用
 		  .on('result', function(rows) {
 		    console.log('set tag result: ', rows );
+
 		  })
 
 		  //終わったよう～
@@ -198,9 +271,8 @@ exports.update_tag = update_tag;
 		    //connection.destroy(); //終了
 		    connection.end();
 		    console.log('set tag end: ' );
-		    select_taglist(req , res);
-		    //app.get('/taglist',sql.select_taglist);
-		    //res.render('taglist');
+		    callback('success');
+		    //select_taglist(req , res);
 		  });
 };
 

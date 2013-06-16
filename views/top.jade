@@ -1,35 +1,38 @@
 html
   head
-    title Talkmob / Welcome
+    title TalkMob / Welcome
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
     link(rel='stylesheet', type='text/css', href='/stylesheets/main.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
   body
-#main
- #SignUp.logo_exp
+  include header
+
+  #main(style='text-align:center;')
+   #SignUp.logo_exp
           .dummy
              p Welcome to
           .logo Talk Mob
           .wrapper
             .content
               .dummy
-              h1 Create your account to explore Pinterest.
+              h1 Create your account to explore TalkMob.
+                if user_name == null
+                  ul.buttons
+                    li
+                      a.btn.btn-large(href='/login',style='color:black')
+                        | ログイン
+                    li
+                      a.btn.btn-large.btn-primary(href='/createid',style='color:white')
+                        | アカウント作成
                 ul.buttons
                   li
-                    a.BigButton.facebook(href='')
-                      span.logo
-                      | Facebook
+                    pre(style='padding:5px;background-color:3b5998;')
+                      a(href='',style='color:white;')
+                        span.logo
+                        | Facebook
                   li
-                    a.BigButton.twitter(href='/login')
-                      span.logo
-                      | Twitter
-                .footer
-                  h3.login
-                    span Already have an account?
-                      a(href='/login/') Log in.
-                  h3.login
-                    span Are you a business?
-                      a(href='http://business.pinterest.com/') Learn more.
-        #Loading
-
+                    pre(style='padding:5px;background-color:#12abdd;')
+                      a(href='/login_tw' ,style='color:white')
+                        span.logo
+                        | Twitter

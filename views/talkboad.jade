@@ -10,6 +10,9 @@ html
     script(type='text/javascript', src='/socket.io/socket.io.js')
     script(type='text/javascript')
       var port = '3000';
+      var js_roomid = #{roomid};
+      var js_name = '#{user_name.name}';
+      var js_id = '#{user_name.id}';
     script(type='text/javascript', src='/javascripts/client.js')
     script(type='text/javascript', src='/javascripts/postit.js')
     script(type='text/javascript', src='/javascripts/hoge.js')
@@ -21,34 +24,24 @@ html
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/font-awesome.css')
-  body.dummy(onLoad='hoge()')
-   .navbar.navbar-inverse.navbar-fixed-top
-    .navbar-inner
-      .container
-        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-         span.icon-bar
-         span.icon-bar
-         span.icon-bar
-        a.brand(href='./mainboad') Talk Mob
-        .nav-collapse.collapse
-          ul.nav
-            li
-              a(href='./mainboad') メインボード
-            li
-              a(href='./createid') ユーザ設定
-            li
-              a(href='./taglist') 興味タグ
+  body.dummy(onLoad='init(#{roomid},#{user_name.name});')
+    include header
 
    #main
+
        .postitboad
          //canvas#canvas_boad(width='490', height='400')
-         blockquote(style='background:#EFE ;padding :15px;')
-          p.text-left.text-success
-           strong テーマ：「TPPってどうなの？」
-          small.text-left 開始日：2013/04/01 タグ：[TPP]
+
+         each item2 in roominfo
+           blockquote(style='background:#EFE ;padding :20px')
+             p.text-left.text-success
+               strong テーマ：#{item2.title}  [# #{item2.roomid}]
+             small.text-left 開始日：#{item2.start} タグ：#{item2.tagname} 　
+
          #screen(style='background: #f9f9f9; height: 300px; width: 540px;')
          button.btn(type='submit', id='addRect') postit
          textarea(id='posttext' ,  rows='1', cols='40')
+
 
 
          .accessory
@@ -135,93 +128,36 @@ html
           img.img-rounded(src='/images/ishiba.gif')
           img.img-rounded(src='/images/anpan2.jpeg')
           img.img-rounded(src='/images/pamyu.jpeg')
-         dl#list.scrollable
-          table
+         div.success
+           #iventMsg(style='color:red;height:10px;margin:0px;font-size:14px')
+         dl#list(style='overflow: scroll; height:500px;scrolltop:30px;')
+
+          each item in chatlist
+           table
             tbody
               tr
                 td
-                  img(src='/images/anpan2.jpeg')
+                  img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{item.id}&size=normal')( style='height:40px')
                 td
                   .balloon
-                    | 海外の安いパン粉が手に入るようになるかな
+                    | #{item.message}
+                    input(type='hidden', id='chatid', value='#{item.chatid}')
                     li
-                     a(href='#')
-                      i.icon-thumbs-up
-                     a(href='#',style='color:orange;')
-                      i.icon-warning-sign
-          table
-            tbody
-              tr
-                td
-                  img(src='/images/gachapin.jpeg')
-                td
-                  .balloon
-                    | 環境問題も重要だよねー
-                    li
-                     a(href='#')
-                      i.icon-thumbs-up
-                     a(href='#',style='color:orange;')
-                      i.icon-warning-sign
-          table
-            tbody
-              tr
-                td
-                  img(src='/images/ishiba.gif')
-                td
-                  .balloon
-                    | 石破です。
-                    li
-                     a(href='#')
-                      i.icon-thumbs-up
-                     a(href='#',style='color:orange;')
-                      i.icon-warning-sign
-          table
-            tbody
-              tr
-                td
-                  img(src='/images/pamyu.jpeg')
-                td
-                  .balloon
-                    | gu
-                    li
-                     a(href='#')
-                      i.icon-thumbs-up
-                     a(href='#',style='color:orange;')
-                      i.icon-warning-sign
-          table
-            tbody
-              tr
-                td
-                  img(src='/images/pamyu.jpeg')
-                td
-                  .balloon
-                    | やっぱり、輸入品が安くなっていいよね。
-                    li
-                     a(href='#')
-                      i.icon-thumbs-up
-                     a(href='#',style='color:orange;')
-                      i.icon-warning-sign
-          table
-            tbody
-              tr
-                td
-                  img(src='/images/ishiba.gif')
-                td
-                  .balloon
-                    | 国民を守るために、そのために生まれてきた。
-                    li
-                     a(href='#')
-                      i.icon-thumbs-up
-                     a(href='#',style='color:orange;')
-                      i.icon-warning-sign
-         dl#typing
+                       a(class='likepoint', href='#')
+                           i.icon-thumbs-up
+                           span(id='like_#{item.chatid}') 11
+                       a.warnpoint(href='#',style='color:orange;')
+                           i.icon-warning-sign
+                           span(id='warn_#{item.chatid}')
 
          form(id='form', action='')
            table
              tr
                td(style='text-align:right;')
-                 img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name}&size=normal')
-                 input(type='hidden', id='user', value='#{user_name}')
+                 img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name.name}&size=normal')
+                 input(type='hidden', id='user', value='#{user_name.name}')
+                 input(type='hidden', id='id', value='#{user_name.id}')
+                 input(type='hidden', id='roomid', value='#{roomid}')
 
                  textarea#message(name='message', rows='2', cols='40')
                  input.btn.btn-success.btn(type='submit', value='送信')

@@ -1,0 +1,15 @@
+.left
+   .user-info-mini
+     img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name.name}&size=bigger')
+     h3 #{user_name.name}
+   .category-navigation
+     nav#category-navigation
+       ul
+         li
+           a(href='/taglist') 興味タグリスト
+         li
+           a(href='/createid') ユーザ設定
+         li
+           a(href='/mainboad') メインボード
+         li
+           a(href='/logout') ログアウト

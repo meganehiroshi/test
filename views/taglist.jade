@@ -12,26 +12,12 @@ html
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
   body
-   .navbar.navbar-inverse.navbar-fixed-top
-    .navbar-inner
-      .container
-        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-         span.icon-bar
-         span.icon-bar
-         span.icon-bar
-        a.brand(href='./mainboad') Talk Mob
-        .nav-collapse.collapse
-          ul.nav
-            li
-              a(href='./mainboad') メインボード
-            li
-              a(href='./createid') ユーザ設定
-            li
-              a(href='./taglist') 興味タグ
+    include header
 
    #main
-         p Talk Mob
-         .last
+
+          include left
+          .last
            form#form(action='', method='POST', accept-charset='utf-8')
              input(type='hidden', name='settagid', value='')
              ul#tag-list-area
@@ -48,20 +34,3 @@ html
                          p(id=tagid).btn.btn-large.btn-block.btn-warning.disabled(href='#') 登録済み
                        b 7299
                        | フォロワー
-
-
-         .left
-           .user-info-mini
-             img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name}&size=bigger')
-             h3 #{user_name}
-           .category-navigation
-             nav#category-navigation
-               ul
-                 li
-                   a(href='/taglist') 興味タグリスト
-                 li
-                   a(href='/createid') ユーザ設定
-                 li
-                   a(href='/mainboad') メインボード
-                 li
-                   a(href='/logout') ログアウト

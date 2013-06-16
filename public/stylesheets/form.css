@@ -48,7 +48,7 @@ legend span {
     text-align:right;
 }
 input {
-    padding:0.15em;
+    padding:10px 14px 5px;
     width:10em;
     border:1px solid #ddd;
     background:#fafafa;

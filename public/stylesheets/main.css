@@ -11,16 +11,18 @@
 		#main {
 			 align:center;
 			margin:5 auto;
-			margin-top:45;
+			margin-top:40;
+			margin-bottom:0;
 			width:900px;
-			height:100%;
+			height:auto;
+			min-height:100%;
 			padding:10px;
 			background-color:#C6E2EE;
 			//border-right:1px solid #B6D2DE;
 			vertical-align:top;
 			-webkit-border-radius:6px;
 			-moz-border-radius:6px;
-			border-radius:6px;}
+			border-radius:0px;}
 		#side {  width:190px; padding:10px 0; background-color:#DAECF4; vertical-align:top;  -webkit-border-radius:6px; -moz-border-radius:6px; border-radius:6px;}
 		#footer { background-color:#fff; margin:5px 0 15px; padding:10px; text-align:center; -webkit-border-radius:6px; -moz-border-radius:6px; border-radius:6px; }
 		#right-content {
@@ -115,7 +117,7 @@
 	-moz-border-radius:10px;
 	border-radius:10px;
 	//display:block;
-	padding:10px;
+	padding:5px;
 //	width: 200;
     max-width: 200;
     font-size: 12px;
@@ -224,12 +226,13 @@
 	div.last {
 		float: right;
 		width: 630;
-		height:90%;
+		height:auto;
 		text-align:center;
 		background-color:#ffffff;
 		margin:0;
 		padding:10;
-		border:2px solid #eeeeee;
+		radius:2px solid #eeeeee;
+		border-radius:6px;
 	}
 	div.postitboad {
 		float: left;
@@ -254,12 +257,14 @@
 	div.left{
 		float: left;
 		width: 210px;
-		height:90%;
+		height:auto;
+		radius:6px;
 		text-align:center;
 		background-color:#ffffff;
 		border:2px solid #eeeeee;
 		margin:0;
 		padding:10;
+		border-radius:6px;
 	}
 	div.accessory{
 		width: 95%;

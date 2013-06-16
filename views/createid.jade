@@ -5,60 +5,64 @@ html
     link(rel='stylesheet', type='text/css', href='/stylesheets/main.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/parts.css')
     link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
+    script(type='text/javascript', src='https://www.google.com/jsapi')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js', type='text/javascript')
+    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js', type='text/javascript')
+    script(type='text/javascript', src='/javascripts/bootstrap.min.js')
+    script(type='text/javascript', src='/javascripts/checkCreateid.js')
 
   body
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
     script(src='js/bootstrap.min.js')
-   .navbar.navbar-inverse.navbar-fixed-top
-    .navbar-inner
-      .container
-        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
-         span.icon-bar
-         span.icon-bar
-         span.icon-bar
-        a.brand(href='./mainboad') Talk Mob
-        .nav-collapse.collapse
-          ul.nav
-            li
-              a(href='./mainboad') メインボード
-            li
-              a(href='./createid') ユーザ設定
-            li
-              a(href='./taglist') 興味タグ
+
+    include header
+    if user_name != null
+      prm_id = user_name.id
+      prm_name = user_name.name
+      prm_pass = user_name.pass
+      prm_mail = user_name.mail
+    else
+      prm_id = ''
+      prm_name = ''
+      prm_pass = ''
+      prm_mail = ''
+
+
    #main
-    .row
-      .dummy.span12
-            form.form-horizontal.span8.offset2(action='', method='POST', accept-charset='utf-8',style='width:auto;align:center;').well
-               fieldset
-                .control-group
-                  label.control-label(for='name') アカウント名
-                  .controls
-                    input#name.input-xlarge(type='text',name='name')
+    .dummy
+            form.form-horizontal(action='', method='POST', accept-charset='utf-8' ,style='height:90%' ,onSubmit="return checkForm()" ,name='form1').well
+             input(type='hidden',name='id',value='#{prm_id}')
+             .container-fluid
+              .row-fluid
+
+               .span5.offset1(align='center')
+                 .frame
+                  img.img-polaroid(src='', alt='Photo of Account Creator',style='width: 200px; height: 200px; ')
+                 .buttons
+                  label.Button(data-text-uploading='Uploading…')Upload your Photo
+               .span5
+                 div.control-group(id="name-group")
+                    if user_name != null
+                      span.uneditable-input(class='span4.5',style='padding:14px;height:50px;font-size:24px',value='#{prm_name}') #{prm_name}
+                      input(type='hidden',name='name',value='#{prm_name}')
+                    else
+                      input#name.span12(type='text',name='name',placeholder='アカウント名',value='#{prm_name}' ,style='padding:14px;height:50px;font-size:24px')
                     p.help-block
-                .control-group
-                  label.control-label(for='pass') パスワード
-                  .controls
-                    input#pass.input-xlarge(type='text',name='pass')
+                 div.control-group(id="pass-group")
+                    input#pass.span12(type='password',name='pass',placeholder='パスワード',value='#{prm_pass}',style='padding:14px;height:50px;font-size:24px')
                     p.help-block
-                .control-group
-                  label.control-label(for='mail') メールアドレス
-                  .controls
-                    input#mail.input-xlarge(type='text',name='mail')
+                 div.control-group(id="mail-group")
+                    input#mail.span12(type='text',name='mail',placeholder='メールアドレス',value='#{prm_mail}',style='padding:14px;height:50px;font-size:24px')
                     p.help-block
-                .control-group
-                  label.control-label 性別
-                  .controls
-                    label.radio
+
+                    label.well-small(style='vertical-align:middle')
                       input#optionsRadios1(type='radio', name='gender', value='1', checked='checked')
                       | 男性
-                    label.radio
-                      input#optionsRadios2(type='radio', name='gender', value='2')
+                      input#optionsRadios2(type='radio', name='gender', value='2', checked='')
                       | 女性
-                .control-group
-                  label.control-label 生まれた年
-                  .controls
+                    p.help-block
                     label.checkbox
-                      select.span2
+                      select
                         option 1980
                         option 1981
                         option 1982
@@ -80,40 +84,15 @@ html
                         option 1998
                         option 1999
                         option 2000
-                .control-group
-                  label.control-label 職種
-                  .controls
-                      //each item in occupation
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | 営業・販売・サービス系
-                        //| item.notation
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | 事務・オフィス系
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | クリエイティブ系
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | IT・技術系
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | 医療・介護系
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | 美容・教育系
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | 工場・物流・土木建築系
-                      label.checkbox
-                        input(type='checkbox', name='optionsCheckboxList1', value='option1')
-                        | 飲食・コンビニ・施設系
+                    p.help-block
+                    hr.separator
+                    .dummy
+                     if user_name != null
+                      input.btn.btn-warning.btn-large.btn-block(type='submit', value='更新')
+                     else
+                      input.btn.btn-success.btn-large.btn-block(type='submit', value='ユーザー登録')
+                     p.text-success #{db_result}
+                    .overlay
 
 
 
-                //.closeBtn.closeButton  
-                .dummy
-                      input.btn.btn-success.btn-large(type='submit', value='ユーザー登録')
-                      p.text-success #{db_result}
-                .overlay
