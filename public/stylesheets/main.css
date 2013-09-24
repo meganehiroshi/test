@@ -16,6 +16,7 @@
 			width:900px;
 			height:auto;
 			min-height:100%;
+			position:relative;
 			padding:10px;
 			background-color:#C6E2EE;
 			//border-right:1px solid #B6D2DE;
@@ -121,6 +122,9 @@
 //	width: 200;
     max-width: 200;
     font-size: 12px;
+    text-align: left;
+    white-space: normal;
+    word-break: break-all;
 }
 .balloon:after, .balloon:before {
 	right: 100%;
@@ -135,15 +139,15 @@
 .balloon:after {
 	border-color: rgba(255, 255, 255, 0);
 	border-right-color: #ffffff;
-	border-width: 10px;
-	top: 50%;
+	border-width: 5px;
+	top: 20px;
 	margin-top: -10px;
 }
 .balloon:before {
 	border-color: rgba(161, 161, 161, 0);
 	border-right-color: #a1a1a1;
-	border-width: 13px;
-	top: 50%;
+	border-width: 8px;
+	top: 20px;
 	margin-top: -13px;
 }
 
@@ -268,7 +272,7 @@
 	}
 	div.accessory{
 		width: 95%;
-		height: 240px;
+		height: auto;
 		text-align:center;
 		background-color:#ffffff;
 		margin:5;

@@ -93,12 +93,12 @@ insert into talkroom_chat (roomid,id,likescore,warnscore,deleteflag,message,crea
 insert into talkroom_chat (roomid,id,likescore,warnscore,deleteflag,message,createdate) values (2,1,0,0,0,'こんばんは１',NOW());
 insert into talkroom_chat (roomid,id,likescore,warnscore,deleteflag,message,createdate) values (2,2,0,0,0,'こんばんは２',NOW());
 
-create table user_like(
+create table chat_like(
 	chatid INT NOT NULL,
 	id INT NOT NULL,
 	primary key (chatid,id)
 );
-create table user_warn(
+create table chat_warn(
 	chatid INT NOT NULL,
 	id INT NOT NULL,
 	primary key (chatid,id)

@@ -212,21 +212,35 @@ var port = 3000;
 //var chat = io.listen(server);
 var chat = require('socket.io').listen(server);
 
+var socketsOf = {};
+
 chat.sockets.on('connection', function(socket) {
 
-	console.log('app.js connection');
+	//console.log('app.js connection');
 	socket.emit('connected');
 
     socket.on('init', function(data) {
-    	console.log('app.js init  roomid:'+data.roomid +'  name:'+data.name + ' id : '+data.id )
+    	//console.log('app.js init  roomid:'+data.roomid +'  name:'+data.name + ' id : '+data.id )
 
     	socket.set('roomid', data.roomid);
     	socket.join(data.roomid);
     	socket.set('name', data.name);
     	socket.set('id', data.id);
-    	chat.sockets.to(data.roomid).emit('msg', {action:'join',user:data.name});
+    	socket.set('client',data,function(){
+    		if(socketsOf[data.roomid] == undefined){
+    			socketsOf[data.roomid] = {};
+    		}
+    		if(socketsOf[data.roomid][data.id] == undefined){
+    			socketsOf[data.roomid][data.id] = {};
+    		}
 
-    	console.log('app.js init end')
+    		socketsOf[data.roomid][data.id] = socket;
+    	})
+    	var members = Object.keys(socketsOf[data.roomid]);
+    	//console.log(members);
+    	chat.sockets.to(data.roomid).emit('msg', {action:'join',user:data.name,id:data.id,memberlist:members});
+
+    	//console.log('app.js init end')
     });
 
 	// クライアントからのイベント'all'を受信する
@@ -234,7 +248,7 @@ chat.sockets.on('connection', function(socket) {
 	// イベント名'msg'で受信メッセージを
 	// 自分を含む全クライアントにブロードキャストする
 
-		console.log('data.text:'+ data.message + data.action + data.user);
+		console.log('data.text:'+ data.message + ' action:'+data.action +' user:'+ data.user+ ' id:'+data.id);
 		//add roomid 2013.06.07(S)//
 		var roomid,name;
 		socket.get('roomid',function(err,_roomid){
@@ -244,12 +258,26 @@ chat.sockets.on('connection', function(socket) {
 		});
 
 
-		talkboad.sendChatMsg(data,function(){
 
+		//チャットメッセージをDBへ登録
+		talkboad.sendChatMsg(data,function(result){
+			if(result == null){
+				//DBに登録したチャットメッセージのidを取得
+				talkboad.SelectChatMaxId(data,function(result){
+					//チャットメッセージのidをdata変数に格納
+					data.chatid = result.maxChatId;
+					data.createdate = result.createdate;
+
+					//トークルーム内の全員へチャットメッセージを送信
+					chat.sockets.to(roomid).emit('msg', data);
+				});
+			}else{
+				console.log('Error sendChatMsg:'+result );
+			}
 		});
 
 
-		chat.sockets.to(roomid).emit('msg', data);
+
 		//add roomid 2013.06.07(E)//
 
 		//    //socket.send(data);
@@ -272,7 +300,7 @@ chat.sockets.on('connection', function(socket) {
     //socket.broadcast.emit('msg', data);
   });
 
-
+  //********* イイネ　ボタンの更新 ***********//
   socket.on('like', function(data) {
     //socket.broadcast.emit('msg', data);
     var roomid;
@@ -281,11 +309,58 @@ chat.sockets.on('connection', function(socket) {
 		//console.log('roomid:'+roomid);
 	});
 
+	//すでにイイネを押しているかを確認
+	talkboad.checkDidLike(data,function(result){
+		if(result == false){
+			//イイネをDBに登録
+			talkboad.doLike(data,function(result){
+				if(result == null){
+					//同じチャットIDのイイネの数をカウント
+					talkboad.countLike(data,function(result){
+						if(result != null){
+							//チャットメッセージのidをdata変数に格納
+							data.likeCount = result;
 
-	talkboad.setLike(data,function(){
-
+							//トークルーム内の全員へチャットメッセージを送信
+							chat.sockets.to(roomid).emit('msg', data);
+						}else{
+							//イイネの数をカウント取得に失敗
+							console.log('Error countLike:' + result);
+						}
+					});
+				}else{
+					//イイネの登録に失敗
+					console.log('Error doLike:'+result );
+				}
+			});
+		}else{
+			console.log('Error checkDidLike:'+result );
+		}
 	});
-    chat.sockets.to(roomid).emit('msg', data);
+
+    //socket.broadcast.emit('msg', data);
+  });
+
+  //********* チャットリストの過去分取得 ***********//
+  socket.on('moreChatList', function(data) {
+
+    var roomid;
+	socket.get('roomid',function(err,_roomid){
+		roomid = _roomid;
+	});
+
+	console.log("roomid:"+roomid + " minChatid:"+data.minChatid);
+
+	//
+	talkboad.openChatList(roomid,data.minChatid,function(result){
+		if(result != null){
+			//操作者だけに返せば良いので'socket.emit'を使用
+			socket.emit('moreChatList', result);
+		}else{
+			console.log('Error checkDidLike:'+result );
+		}
+	});
+
     //socket.broadcast.emit('msg', data);
   });
 
@@ -293,7 +368,7 @@ chat.sockets.on('connection', function(socket) {
   socket.on('disconnect', function(data) {
     console.log('disconn');
 
-    var roomid,name;
+    var roomid,name,id;
 	socket.get('roomid',function(err,_roomid){
 		roomid = _roomid;
 		//console.log('roomid:'+roomid);
@@ -302,7 +377,11 @@ chat.sockets.on('connection', function(socket) {
 		name = _name;
 		//console.log('name:'+name);
 	});
-    chat.sockets.to(roomid).emit('msg', {action:'exit',user:name});
+	socket.get('id',function(err,_id){
+		id = _id;
+		//console.log('name:'+name);
+	});
+    chat.sockets.to(roomid).emit('msg', {action:'exit',user:name,id:id});
   });
 
 

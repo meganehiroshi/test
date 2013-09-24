@@ -44,11 +44,11 @@ exports.mainboad = function(req, res){
 exports.talkboad = function(req, res){
 	var roomid = req.param('roomid');
 	console.log('exports talkboad')
-	talkboad.openChatList(req,res,req.user,roomid,function(results){
+	talkboad.openChatList(roomid,'',function(results){
 	//sql.select_taglist2(req,res,req.user,function(results){
 
 		if(results){
-			talkboad.SelectTalkroom(req,res,roomid,function(results2){
+			talkboad.getRoomInfo(req,res,roomid,function(results2){
 				if(results2){
 					console.log('results2' + results2.title);
 					res.render('talkboad', {

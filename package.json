@@ -10,11 +10,14 @@
     "jade": "*",
     "async": "*",
     "mysql": ">=0.9.0",
-	"passport": "*",
+    "passport": "*",
     "passport-local": "*",
     "passport-facebook": "*",
     "passport-twitter": "*",
     "connect-flash": "*",
-    "gm":"*"
-}
+    "gm": "*"
+  },
+  "devDependencies": {
+    "gm": "~1.9.2"
+  }
 }

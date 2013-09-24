@@ -17,6 +17,7 @@ html
     script(type='text/javascript', src='/javascripts/postit.js')
     script(type='text/javascript', src='/javascripts/hoge.js')
     script(type='text/javascript', src='/javascripts/chart.js')
+    script(type='text/javascript', src='/javascripts/news.js')
     script(type='text/javascript', src='/javascripts/bootstrap.min.js')
     script(type='text/javascript', src='/javascripts/bootstrap-tab.js')
     script(type='text/javascript', src='/javascripts/bootstrap-modal.js')
@@ -38,12 +39,6 @@ html
                strong テーマ：#{item2.title}  [# #{item2.roomid}]
              small.text-left 開始日：#{item2.start} タグ：#{item2.tagname} 　
 
-         #screen(style='background: #f9f9f9; height: 300px; width: 540px;')
-         button.btn(type='submit', id='addRect') postit
-         textarea(id='posttext' ,  rows='1', cols='40')
-
-
-
          .accessory
           .tabbable.tabs-right
            ul#myTab.nav.nav-tabs
@@ -58,6 +53,9 @@ html
               i.icon-file-alt.icon-3x
             li
              a(href='#4', data-toggle='tab')
+              i.icon-group.icon-3x
+            li
+             a(href='#5', data-toggle='tab')
               i.icon-group.icon-3x
            .tab-content
             #1data.tab-pane.active
@@ -74,16 +72,13 @@ html
                tbody
                  tr
                    td
-                    img#esc-thumbnail-52778337738185.th.late-tbn(imgsrc='https://news.google.com/news/tbn/58fOWkxW9IMJ/6.jpg', alt='', border='0', width='72', height='72', style='margin:0', src='https://news.google.com/news/tbn/58fOWkxW9IMJ/6.jpg')
-                   td クローズアップ２０１３:ＴＰＰ日米協議合意 参加ありき、争点棚上げ
+                   td
+                    div(style='')
+                      #ggnews
                  tr
                    td
                     img#esc-thumbnail-3872128626133068251.th.late-tbn(imgsrc='https://news.google.com/news/tbn/S_nUw3EMlHcJ/6.jpg', alt='', border='0', width='72', height='72', style='margin:0', src='https://news.google.com/news/tbn/S_nUw3EMlHcJ/6.jpg')
                    td 出版権提案、TPP交渉参加、絶版作品のダウンロード
-                 tr
-                   td
-                    img#esc-thumbnail-3872128626133068251.th.late-tbn(imgsrc='https://news.google.com/news/tbn/S_nUw3EMlHcJ/6.jpg', alt='', border='0', width='72', height='72', style='margin:0', src='/images/tpp_site.png')
-                   td 考えてみよう！TPPのこと 日本の食と暮らし・いのちを守るネットワーク
 
 
             #3.tab-pane
@@ -116,51 +111,64 @@ html
                    td Larry
                    td the Bird
                    td @twitter
-
              a.btn.btn-success#openModal(data-target='#myModal', role='button', data-toggle='modal') アンケート作成
+            #5.tab-pane
+              #screen(style='background: #f9f9f9; height: 100%; width: 540px;')
+              button.btn(type='submit', id='addRect') postit
+              textarea(id='posttext' ,  rows='1', cols='40')
+
+
 
 
        .chatboad
          dl#memberlisttd(style='border:solid 1px;margin:1px;padding:2px;background-color:#BBB;')
-          img.img-rounded(src='/images/gachapin.jpeg')
-          img.img-rounded(src='/images/shiro_normal.jpg')
-          img.img-rounded(src='/images/tsuda.png')
-          img.img-rounded(src='/images/ishiba.gif')
-          img.img-rounded(src='/images/anpan2.jpeg')
-          img.img-rounded(src='/images/pamyu.jpeg')
+
          div.success
            #iventMsg(style='color:red;height:10px;margin:0px;font-size:14px')
-         dl#list(style='overflow: scroll; height:500px;scrolltop:30px;')
+         dl#list(style='overflow: scroll; height:450px;scrolltop:30px;')
 
-          each item in chatlist
-           table
-            tbody
-              tr
-                td
-                  img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{item.id}&size=normal')( style='height:40px')
-                td
-                  .balloon
-                    | #{item.message}
+
+
+           each item in chatlist
+
+            if topFlag == null
+                //１件目の時だけ、それ以前のチャットを取得する際に使用するためのスタートアイテムidを保持するspanタグを挿入
+                topFlag = true
+                span#startitem(hidden) #{item.chatid}
+             div(style='padding:4px;')
+                div.row-fluid(style='float:left;')
+                  div(style='float:left;')
+                     img(src='https://s3-ap-northeast-1.amazonaws.com/talkmobprofile/#{item.id}')( style='height:40px')
+                  div.balloon(style='float:left;padding:10px;') #{item.message}
                     input(type='hidden', id='chatid', value='#{item.chatid}')
-                    li
-                       a(class='likepoint', href='#')
-                           i.icon-thumbs-up
-                           span(id='like_#{item.chatid}') 11
-                       a.warnpoint(href='#',style='color:orange;')
-                           i.icon-warning-sign
-                           span(id='warn_#{item.chatid}')
+                    div(style='padding:0px;margin:0px;')
+                          a.likepoint(href='#')
+                                i.icon-thumbs-up
+                                span(id='like_#{item.chatid}')
+                          a.warnpoint(href='#',style='color:orange;')
+                                i.icon-warning-sign
+                                span(id='warn_#{item.chatid}')
+                div.row-fluid
+                          div(style='float:right;padding:0px;font-size:10px;color:#999;') #{item.createdate}
+
 
          form(id='form', action='')
            table
              tr
                td(style='text-align:right;')
-                 img(src='https://api.twitter.com/1/users/profile_image?screen_name=#{user_name.name}&size=normal')
+                 img(src='https://s3-ap-northeast-1.amazonaws.com/talkmobprofile/#{user_name.id}')
                  input(type='hidden', id='user', value='#{user_name.name}')
                  input(type='hidden', id='id', value='#{user_name.id}')
                  input(type='hidden', id='roomid', value='#{roomid}')
 
                  textarea#message(name='message', rows='2', cols='40')
-                 input.btn.btn-success.btn(type='submit', value='送信')
+                 input.btn.btn-success#btnMsgSubmit(type='submit', value='送信')
+                 input(type='hidden', id='lastMsgUser', value='')
+                 input(type='hidden', id='MsgCount', value='0')
+                 span.count
+                 li#formMsg(style='color:red;height:10px;margin:0px;font-size:14px')
+
+
 
   #myModal.modal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true', style='display:none;')
                .modal-header(style='background:#EFE')
